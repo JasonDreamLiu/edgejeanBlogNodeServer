@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa508fb8-31e1-4573-bfd4-811a0473e28d" name="默认的" comment="" />
+    <list default="true" id="fa508fb8-31e1-4573-bfd4-811a0473e28d" name="默认的" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/mongoDB/connect.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/mongoDB/connect.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +25,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1io5QqrzBM4tsMWoVtahbQVJOP3" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -25,8 +36,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="12.16.1" />
-    <property name="javascript.nodejs.core.library.typings.version" value="12.12.67" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="14.9.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.11.8" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
@@ -41,10 +53,33 @@
       <option name="presentableId" value="Default" />
       <updated>1602561091029</updated>
       <workItem from="1602561092096" duration="5957000" />
+      <workItem from="1602591125162" duration="15579000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1379" height="398" key="GridCell.Tab.0.bottom" timestamp="1602591329785">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1379" height="398" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1602591329785" />
+    <state width="1379" height="398" key="GridCell.Tab.0.center" timestamp="1602591329784">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1379" height="398" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1602591329784" />
+    <state width="1379" height="398" key="GridCell.Tab.0.left" timestamp="1602591329784">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1379" height="398" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1602591329784" />
+    <state width="1379" height="398" key="GridCell.Tab.0.right" timestamp="1602591329784">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1379" height="398" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1602591329784" />
+    <state x="1486" y="386" width="672" height="678" key="search.everywhere.popup" timestamp="1602605916203">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1486" y="386" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1602605916203" />
   </component>
 </project>

@@ -18,24 +18,42 @@ router.get('/', function(req, res, next) {
 //   res.render('index', { title: req.params.name });
 //   db.collection(req.params.name);
 // })
-router.get('/connect/sel/:name', (req, res) => {
-  res.send(db.find({},req.params.name));
+router.get('/connect/sel/:name', async (req, res) => {
+  res.send(await db.find({},req.params.name));
 })
-router.post('/connect/addBookmarks',(req,res)=>{
-  res.render('index', {title: req.params.name});
+router.get('/connect/aggregate', async (req, res) => {
+  res.send(await db.aggregate([
+    {
+      $lookup:{
+        from:"tb_bookmarks_types",
+        localField:"_id",
+        foreignField:"bookmark_id",
+        as:"children"
+      }
+    }
+  ],"tb_bookmarks"));
+})
+router.get('/connect/selBookmarks', async (req, res) => {
   const {collectionName, name} = req.params;
-  db.insert({
-    name
-  }, collectionName);
+  res.send(await db.find({},req.params.name));
 })
-router.post('/connect/addBookmarksTypes',(req,res)=>{
-  res.send();
+router.post('/connect/addBookmarkTitles',async (req,res)=>{
+  // res.render('index', {title: req.params.name});
+  const {bookmarkTitles} = req.params;
+
+  const a = await db.insert({
+    bookmarkTitles
+  }, 'tb_bookmarks');
+  res.send(a);
+})
+router.post('/connect/addBookmarksTypes',async (req,res)=>{
   const {collectionName,name,url,bookmarkid} = req.params;
-  db.insert({
+  const a = await db.insert({
     name,
     url,
     bookmark_id:mongoose.Types.ObjectId(bookmarkid)
   },collectionName);
+  res.send(a);
 })
 
 module.exports = router;

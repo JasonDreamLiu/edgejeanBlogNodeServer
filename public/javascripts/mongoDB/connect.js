@@ -24,14 +24,17 @@ function mongoDB_Obj(url){
     }
     const connect = new connect_(this.user,this.pws,this.host,this.post,this.database);
 
-    this.collection = (name) => {
-        let a = connect.connect(collection,{name});
+    this.collection = async (name) => {
+        return await connect.connect(collection,{name});
     }
-    this.insert = (obj,collectionName) => {
-        let a = connect.connect(insert,{obj,collectionName});
+    this.insert = async (obj,collectionName) => {
+        return await connect.connect(insert,{obj,collectionName});
     }
-    this.find = (obj,collectionName) => {
-        return connect.connect(find,{obj,collectionName});
+    this.find = async (obj,collectionName) => {
+        return await connect.connect(find,{obj,collectionName});
+    }
+    this.aggregate = async (obj,collectionName) => {
+        return await connect.connect(aggregate,{obj,collectionName});
     }
 
     function connect_(user,pws,host,post,database){
@@ -44,11 +47,12 @@ function mongoDB_Obj(url){
                 conn = await MongoClient.connect(this.url);
                 console.log("数据库已连接！");
                 const dbase = conn.db(dbName);
-                a = fc(obj, dbase, res);
+                a = await fc(obj, dbase, res);
             } catch (err){
                 console.error(`错误: ${err}`);
             } finally {
                 if (conn != null) conn.close();
+                console.log("数据库已断开！");
                 return a;
             }
         }
@@ -64,9 +68,11 @@ function collection(obj,dbase){
 
     dbase.createCollection(name).then(result=>{
         console.log(`创建集合: ${name} 成功！`);
+        return result;
     },err=>{
         console.log(`创建集合: ${name} 失败！`);
         console.log(err);
+        return err;
     });
 };
 function insert(obj_,dbase){
@@ -78,20 +84,45 @@ function insert(obj_,dbase){
     dbase.collection(collectionName).insert(obj).then(result=>{
         console.log(`集合 ${collectionName} 插入数据成功！`);
         console.log(obj);
+        return result;
     },err=>{
         console.log(`集合 ${collectionName} 插入数据失败！`);
         console.log(err);
+        return err;
     })
 };
+// function updateInsert(obj_,dbase)
 
 async function find(obj_,dbase){
     const {obj={},collectionName} = obj_;
     if (!(typeof obj === "object" && obj)){
-        console.log('请输入object类型的集合名');
+        console.log('请输入object类型的查询条件');
         return;
     }
     let a = null;
     return dbase.collection(collectionName).find(obj).toArray().then(result=>{
+        console.log("查询成功！");
+        result.forEach((value,index,arr)=>{
+            console.log(value);
+            console.log(typeof value._id);
+        })
+        return result;
+    },err=>{
+        console.log(`查询失败！`);
+        console.log(err);
+        return err;
+    });
+};
+
+
+async function aggregate(obj_,dbase){
+    const {obj={},collectionName} = obj_;
+    if (!(typeof obj === "object" && obj)){
+        console.log('请输入object类型的聚合查询条件');
+        return;
+    }
+    let a = null;
+    return dbase.collection(collectionName).aggregate(obj).toArray().then(result=>{
         console.log("查询成功！");
         result.forEach((value,index,arr)=>{
             console.log(value);
@@ -100,8 +131,8 @@ async function find(obj_,dbase){
     },err=>{
         console.log(`查询失败！`);
         console.log(err);
+        return err;
     });
-    // return a;
 };
 
 module.exports = mongoDB_Obj

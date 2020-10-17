@@ -33,8 +33,8 @@ function mongoDB_Obj(url){
     this.insertOne = async (obj,collectionName) => {
         return await connect.connect(insertOne,{obj,collectionName});
     }
-    this.find = async (obj,collectionName) => {
-        return await connect.connect(find,{obj,collectionName});
+    this.find = async (obj,collectionName,limit) => {
+        return await connect.connect(find,{obj,collectionName,limit});
     }
     this.aggregate = async (obj,collectionName) => {
         return await connect.connect(aggregate,{obj,collectionName});
@@ -112,14 +112,16 @@ async function insertOne(obj_,dbase){
 // function updateInsert(obj_,dbase)
 
 async function find(obj_,dbase){
-    const {obj={},collectionName} = obj_;
+    const {obj={},collectionName,limit=0} = obj_;
     if (!(typeof obj === "object" && obj)){
         console.log('请输入object类型的查询条件');
         return;
     }
-    let a = null;
-    return dbase.collection(collectionName).find(obj).toArray().then(result=>{
-        console.log(`集合：${collectionName}\n查询条件：${obj}`);
+    return dbase.collection(collectionName).find(obj).limit(limit).toArray().then(result=>{
+        console.log("集合：");
+        console.log(collectionName);
+        console.log("查询条件：");
+        console.log(obj);
         if (result.length===0){
             console.log(`查询失败！未查询到该条件下的数据！`);
         }else {

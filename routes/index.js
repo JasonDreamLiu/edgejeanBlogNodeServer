@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoDB = require('../public/javascripts/mongoDB/connect');
 const mongoose = require('mongoose');
+// const {FetchData} = require('../public/javascripts/AxiosMannage/index');
 
 const db = new mongoDB({
     user: "edgejeanblog",
@@ -12,14 +13,32 @@ const db = new mongoDB({
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    // FetchData("https://blog.csdn.net/")
     res.render('index', {title: 'Express'});
 });
-router.post('/connect/selete', async (req, res) => {
+router.post('/connect/select', async (req, res) => {
     const obj = req.body;
     console.log(obj);
     const a = await db.find({title: {"$in": obj}}, "tb_bookmarks");
     console.log(a);
     res.send(a);
+})
+router.get('/connect/selIsBookmarkTitle', async (req, res) => {
+    const obj = req.query.title;
+    console.log(obj);
+    const a = await db.find({title:obj}, "tb_bookmarks");
+    console.log(a);
+    res.send(a.length>0?true:false);
+})
+router.get('/connect/selBookmarkTitles', async (req, res) => {
+    const obj = req.query.title;
+    const a = await db.find({title:{$regex:obj,$options:"$i"}}, "tb_bookmarks",10);
+    let list = []
+
+    a.forEach(item=>{
+        list.push({value:item.title});
+    })
+    res.send(list);
 })
 // router.get('/connect/addCollection/:name', (req, res) => {
 //   res.render('index', { title: req.params.name });
@@ -59,9 +78,9 @@ router.post('/connect/addBookmarkTitles', async (req, res) => {
             bookmarkTitles.objs.push(item);
         }
     })
-    this.sus = {};
-    this.sus.exist = await db.find({title: {"$in": bookmarkTitles.list}}, "tb_bookmarks");
-    this.sus.exist.forEach(item => {
+    let sus = {};
+    sus.exist = await db.find({title: {"$in": bookmarkTitles.list}}, "tb_bookmarks");
+    sus.exist.forEach(item => {
         try{
             bookmarkTitles.objs = bookmarkTitles.objs.filter(item_=>item_.title!==item.title);
         }catch (err){
@@ -71,13 +90,17 @@ router.post('/connect/addBookmarkTitles', async (req, res) => {
     const a = await db.insertMany(bookmarkTitles.objs,"tb_bookmarks");
     console.log("aaa",a);
     if (a&&a.result.ok){
-        this.sus.result = {
+        sus.result = {
             success:true,
             insertOkInt:a.result.n,
             insertDatas:a.ops
         }
+    }else{
+        sus.result = {
+            success:false
+        }
     }
-    res.json(this.sus);
+    res.json(sus);
 })
 
 router.post('/connect/addBookmarksTypes', async (req, res) => {
@@ -88,6 +111,57 @@ router.post('/connect/addBookmarksTypes', async (req, res) => {
         bookmark_id: mongoose.Types.ObjectId(bookmarkid)
     }, collectionName);
     res.send(a);
+})
+router.post('/connect/addBookmarks', async (req, res) => {
+    let datas = [];
+    let types = [];
+    req.body.forEach(item=>{
+        if (datas[item.title]!==undefined){
+            datas[item.title].push({
+                name:item.name,
+                url:item.url
+            })
+        }else {
+            datas[item.title] = [{
+                name:item.name,
+                url:item.url
+            }]
+        }
+    })
+    // datas.forEach((item,index)=>{
+    //     // const a = await db.find({title:index}, "tb_bookmarks");
+    //     console.log(index);
+    // })
+    for (let key in datas){
+        let a = await db.find({title:key}, "tb_bookmarks");
+        if (a.length===0){
+            a = await db.insertOne({title:key},"tb_bookmarks");
+        }
+        if (a[0]){
+            a = a[0]._id;
+        }else{
+            a = a._id
+        }
+        for (let key1 in datas[key]){
+            await types.push(Object.assign(datas[key][key1],{bookmark_id:a}));
+        }
+    }
+
+    let sus = {
+    }
+    const a = await db.insertMany(types,"tb_bookmarks_types");
+    if (a&&a.result.ok){
+        sus.result = {
+            success:true,
+            insertOkInt:a.result.n,
+            insertDatas:a.ops
+        }
+    }else{
+        sus.result = {
+            success:false
+        }
+    }
+    res.send(sus);
 })
 
 module.exports = router;

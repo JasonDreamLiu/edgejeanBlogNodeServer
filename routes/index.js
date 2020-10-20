@@ -59,14 +59,38 @@ router.get('/connect/aggregate', async (req, res) => {
         }
     ], "tb_bookmarks"));
 })
-
+router.get('/connect/aggregatePagination', async (req, res) => {
+    let {page,pagesize} = req.query;
+    page = Number(page);
+    pagesize = Number(pagesize);
+    console.log(pagesize,(page-1)*pagesize);
+    res.send(await db.aggregate([
+        {
+            $lookup: {
+                from: "tb_bookmarks",
+                localField: "bookmark_id",
+                foreignField: "_id",
+                as: "tb_bookmark_title"
+            }
+        },
+        {
+            $unwind: "$tb_bookmark_title"
+        },
+        {
+            $project : {
+                name : 1 ,
+                url : 1,
+                tb_bookmark_title:1
+            }
+        }
+    ], "tb_bookmarks_types",pagesize,(page-1)*pagesize));
+})
 router.get('/connect/selBookmarks', async (req, res) => {
     const {collectionName, name} = req.params;
     const a = await db.find({}, req.params.name);
     console.log(a);
     res.send(a);
 })
-
 router.post('/connect/addBookmarkTitles', async (req, res) => {
     let bookmarkTitles = {
         objs:[],

@@ -36,8 +36,8 @@ function mongoDB_Obj(url){
     this.find = async (obj,collectionName,limit) => {
         return await connect.connect(find,{obj,collectionName,limit});
     }
-    this.aggregate = async (obj,collectionName,limit,skip) => {
-        return await connect.connect(aggregate,{obj,collectionName,limit,skip});
+    this.aggregate = async (obj,collectionName) => {
+        return await connect.connect(aggregate,{obj,collectionName});
     }
 
     function connect_(user,pws,host,post,database){
@@ -140,13 +140,13 @@ async function find(obj_,dbase){
 
 
 async function aggregate(obj_,dbase){
-    const {obj={},collectionName,limit=0,skip=0} = obj_;
+    const {obj={},collectionName} = obj_;
     if (!(typeof obj === "object" && obj)){
         console.log('请输入object类型的聚合查询条件');
         return;
     }
     let a = null;
-    return dbase.collection(collectionName).aggregate(obj).limit(limit).skip(skip).toArray().then(result=>{
+    return dbase.collection(collectionName).aggregate(obj).toArray().then(result=>{
         console.log("查询成功！");
         result.forEach((value,index,arr)=>{
             console.log(value);

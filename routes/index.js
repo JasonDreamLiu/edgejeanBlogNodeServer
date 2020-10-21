@@ -60,30 +60,50 @@ router.get('/connect/aggregate', async (req, res) => {
     ], "tb_bookmarks"));
 })
 router.get('/connect/aggregatePagination', async (req, res) => {
-    let {page,pagesize} = req.query;
+    let {page,pagesize,bookmark_id="",name="",url=""} = req.query;
+    bookmark_id = bookmark_id?mongoose.Types.ObjectId(bookmark_id):bookmark_id
     page = Number(page);
     pagesize = Number(pagesize);
-    console.log(pagesize,(page-1)*pagesize);
-    res.send(await db.aggregate([
-        {
-            $lookup: {
-                from: "tb_bookmarks",
-                localField: "bookmark_id",
-                foreignField: "_id",
-                as: "tb_bookmark_title"
-            }
-        },
-        {
-            $unwind: "$tb_bookmark_title"
-        },
-        {
-            $project : {
-                name : 1 ,
-                url : 1,
-                tb_bookmark_title:1
-            }
+    let match = null;
+    let obj = []
+    if (bookmark_id){
+        match.bookmark_id=bookmark_id;
+    }
+    if (name){
+        match.name = {$regex: name, $options: "$i"};
+    }
+    if (url){
+        match.url = {$regex: url, $options: "$i"};
+    }
+    if (pagesize){
+        if (!page){
+            page = 1;
         }
-    ], "tb_bookmarks_types",pagesize,(page-1)*pagesize));
+        obj.push({$limit:pagesize},{$skip:(page-1)*pagesize});
+    }
+    if (match){
+        obj.push(match);
+    }
+    obj.push({
+        $lookup: {
+            from: "tb_bookmarks",
+            localField: "bookmark_id",
+            foreignField: "_id",
+            as: "tb_bookmark_title"
+        }
+    })
+    obj.push({
+        $unwind: "$tb_bookmark_title"
+    })
+    obj.push({
+        $project : {
+            name : 1 ,
+            url : 1,
+            tb_bookmark_title:1
+        }
+    })
+    console.log(obj);
+    res.send(await db.aggregate(obj, "tb_bookmarks_types"));
 })
 router.get('/connect/selBookmarks', async (req, res) => {
     const {collectionName, name} = req.params;

@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 
-// var url = "mongodb://edgejeanblog:sdd19961103@118.25.150.243/edgejeanblog";
+// var url = "mongodb://edgejeanblog:sdd19961103@yumeng.com:52596/edgejeanblog";
 
 
 function mongoDB_Obj(url){

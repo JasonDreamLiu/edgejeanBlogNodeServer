@@ -8,6 +8,7 @@ const db = new mongoDB({
     user: "edgejeanblog",
     pws: "sdd19961103",
     host: "118.25.150.243",
+    post: "52596",
     database: "edgejeanblog"
 })
 
@@ -28,7 +29,7 @@ router.get('/connect/selIsBookmarkTitle', async (req, res) => {
     console.log(obj);
     const a = await db.find({title:obj}, "tb_bookmarks");
     console.log(a);
-    res.send(a.length>0?true:false);
+    res.send(a.length > 0);
 })
 router.get('/connect/selBookmarkTitles', async (req, res) => {
     const obj = req.query.title;
@@ -59,14 +60,58 @@ router.get('/connect/aggregate', async (req, res) => {
         }
     ], "tb_bookmarks"));
 })
-
+router.get('/connect/aggregatePagination', async (req, res) => {
+    let {page,pagesize,bookmark_id="",name="",url=""} = req.query;
+    bookmark_id = bookmark_id?mongoose.Types.ObjectId(bookmark_id):bookmark_id
+    page = Number(page);
+    pagesize = Number(pagesize);
+    let match = null;
+    let obj = []
+    if (bookmark_id){
+        match.bookmark_id=bookmark_id;
+    }
+    if (name){
+        match.name = {$regex: name, $options: "$i"};
+    }
+    if (url){
+        match.url = {$regex: url, $options: "$i"};
+    }
+    if (pagesize){
+        if (!page){
+            page = 1;
+        }
+        obj.push({$limit:pagesize},{$skip:(page-1)*pagesize});
+    }
+    if (match){
+        obj.push(match);
+    }
+    obj.push({
+        $lookup: {
+            from: "tb_bookmarks",
+            localField: "bookmark_id",
+            foreignField: "_id",
+            as: "tb_bookmark_title"
+        }
+    })
+    obj.push({
+        $unwind: "$tb_bookmark_title"
+    })
+    obj.push({
+        $project : {
+            name : 1 ,
+            url : 1,
+            tb_bookmark_title:1
+        }
+    })
+    console.log(obj);
+    res.send(await db.aggregate(obj, "tb_bookmarks_types"));
+})
 router.get('/connect/selBookmarks', async (req, res) => {
     const {collectionName, name} = req.params;
     const a = await db.find({}, req.params.name);
     console.log(a);
     res.send(a);
 })
-
 router.post('/connect/addBookmarkTitles', async (req, res) => {
     let bookmarkTitles = {
         objs:[],

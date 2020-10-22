@@ -8,6 +8,7 @@ const db = new mongoDB({
     user: "edgejeanblog",
     pws: "sdd19961103",
     host: "118.25.150.243",
+    post: "52596",
     database: "edgejeanblog"
 })
 
@@ -28,7 +29,7 @@ router.get('/connect/selIsBookmarkTitle', async (req, res) => {
     console.log(obj);
     const a = await db.find({title:obj}, "tb_bookmarks");
     console.log(a);
-    res.send(a.length>0?true:false);
+    res.send(a.length > 0);
 })
 router.get('/connect/selBookmarkTitles', async (req, res) => {
     const obj = req.query.title;

@@ -27,17 +27,17 @@ router.post('/connect/select', async (req, res) => {
 router.get('/connect/selIsBookmarkTitle', async (req, res) => {
     const obj = req.query.title;
     console.log(obj);
-    const a = await db.find({title:obj}, "tb_bookmarks");
+    const a = await db.find({title: obj}, "tb_bookmarks");
     console.log(a);
     res.send(a.length > 0);
 })
 router.get('/connect/selBookmarkTitles', async (req, res) => {
     const obj = req.query.title;
-    const a = await db.find({title:{$regex:obj,$options:"$i"}}, "tb_bookmarks",10);
+    const a = await db.find({title: {$regex: obj, $options: "$i"}}, "tb_bookmarks", 10);
     let list = []
 
-    a.forEach(item=>{
-        list.push({value:item.title});
+    a.forEach(item => {
+        list.push({value: item.title});
     })
     res.send(list);
 })
@@ -61,30 +61,26 @@ router.get('/connect/aggregate', async (req, res) => {
     ], "tb_bookmarks"));
 })
 router.get('/connect/aggregatePagination', async (req, res) => {
-    let {page,pagesize,bookmark_id="",name="",url=""} = req.query;
-    bookmark_id = bookmark_id?mongoose.Types.ObjectId(bookmark_id):bookmark_id
+    let {page, pagesize, bookmark_id = "", name = "", url = ""} = req.query;
+    bookmark_id = bookmark_id ? mongoose.Types.ObjectId(bookmark_id) : bookmark_id
     page = Number(page);
     pagesize = Number(pagesize);
-    let match = null;
+    let match = bookmark_id || name || url ? {} : null;
     let obj = []
-    if (bookmark_id){
-        match.bookmark_id=bookmark_id;
+    if (bookmark_id) {
+        match.bookmark_id = bookmark_id;
     }
-    if (name){
+    if (name) {
         match.name = {$regex: name, $options: "$i"};
     }
-    if (url){
+    if (url) {
         match.url = {$regex: url, $options: "$i"};
     }
-    if (pagesize){
-        if (!page){
-            page = 1;
+    obj.push({
+        $match: {
+            bookmark_id: {$ne: null}
         }
-        obj.push({$limit:pagesize},{$skip:(page-1)*pagesize});
-    }
-    if (match){
-        obj.push(match);
-    }
+    })
     obj.push({
         $lookup: {
             from: "tb_bookmarks",
@@ -97,14 +93,23 @@ router.get('/connect/aggregatePagination', async (req, res) => {
         $unwind: "$tb_bookmark_title"
     })
     obj.push({
-        $project : {
-            name : 1 ,
-            url : 1,
-            tb_bookmark_title:1
+        $project: {
+            name: 1,
+            url: 1,
+            tb_bookmark_title: 1,
         }
     })
+    if (pagesize) {
+        if (!page) {
+            page = 1;
+        }
+        obj.push({$skip: (page - 1) * pagesize}, {$limit: pagesize});
+    }
+
+    let a = await db.aggregate(obj, "tb_bookmarks_types");
+    let total = await db.estimatedDocumentCount({}, "tb_bookmarks_types");
     console.log(obj);
-    res.send(await db.aggregate(obj, "tb_bookmarks_types"));
+    res.send({datas:a,total});
 })
 router.get('/connect/selBookmarks', async (req, res) => {
     const {collectionName, name} = req.params;
@@ -114,11 +119,11 @@ router.get('/connect/selBookmarks', async (req, res) => {
 })
 router.post('/connect/addBookmarkTitles', async (req, res) => {
     let bookmarkTitles = {
-        objs:[],
-        list:[]
+        objs: [],
+        list: []
     };
-    req.body.forEach(item=>{
-        if (item.title){
+    req.body.forEach(item => {
+        if (item.title) {
             bookmarkTitles.list.push(item.title);
             bookmarkTitles.objs.push(item);
         }
@@ -126,23 +131,23 @@ router.post('/connect/addBookmarkTitles', async (req, res) => {
     let sus = {};
     sus.exist = await db.find({title: {"$in": bookmarkTitles.list}}, "tb_bookmarks");
     sus.exist.forEach(item => {
-        try{
-            bookmarkTitles.objs = bookmarkTitles.objs.filter(item_=>item_.title!==item.title);
-        }catch (err){
+        try {
+            bookmarkTitles.objs = bookmarkTitles.objs.filter(item_ => item_.title !== item.title);
+        } catch (err) {
             console.error(`错误: ${err}`);
         }
     });
-    const a = await db.insertMany(bookmarkTitles.objs,"tb_bookmarks");
-    console.log("aaa",a);
-    if (a&&a.result.ok){
+    const a = await db.insertMany(bookmarkTitles.objs, "tb_bookmarks");
+    console.log("aaa", a);
+    if (a && a.result.ok) {
         sus.result = {
-            success:true,
-            insertOkInt:a.result.n,
-            insertDatas:a.ops
+            success: true,
+            insertOkInt: a.result.n,
+            insertDatas: a.ops
         }
-    }else{
+    } else {
         sus.result = {
-            success:false
+            success: false
         }
     }
     res.json(sus);
@@ -160,16 +165,16 @@ router.post('/connect/addBookmarksTypes', async (req, res) => {
 router.post('/connect/addBookmarks', async (req, res) => {
     let datas = [];
     let types = [];
-    req.body.forEach(item=>{
-        if (datas[item.title]!==undefined){
+    req.body.forEach(item => {
+        if (datas[item.title] !== undefined) {
             datas[item.title].push({
-                name:item.name,
-                url:item.url
+                name: item.name,
+                url: item.url
             })
-        }else {
+        } else {
             datas[item.title] = [{
-                name:item.name,
-                url:item.url
+                name: item.name,
+                url: item.url
             }]
         }
     })
@@ -177,33 +182,32 @@ router.post('/connect/addBookmarks', async (req, res) => {
     //     // const a = await db.find({title:index}, "tb_bookmarks");
     //     console.log(index);
     // })
-    for (let key in datas){
-        let a = await db.find({title:key}, "tb_bookmarks");
-        if (a.length===0){
-            a = await db.insertOne({title:key},"tb_bookmarks");
+    for (let key in datas) {
+        let a = await db.find({title: key}, "tb_bookmarks");
+        if (a.length === 0) {
+            a = await db.insertOne({title: key}, "tb_bookmarks");
         }
-        if (a[0]){
+        if (a[0]) {
             a = a[0]._id;
-        }else{
+        } else {
             a = a._id
         }
-        for (let key1 in datas[key]){
-            await types.push(Object.assign(datas[key][key1],{bookmark_id:a}));
+        for (let key1 in datas[key]) {
+            await types.push(Object.assign(datas[key][key1], {bookmark_id: a}));
         }
     }
 
-    let sus = {
-    }
-    const a = await db.insertMany(types,"tb_bookmarks_types");
-    if (a&&a.result.ok){
+    let sus = {}
+    const a = await db.insertMany(types, "tb_bookmarks_types");
+    if (a && a.result.ok) {
         sus.result = {
-            success:true,
-            insertOkInt:a.result.n,
-            insertDatas:a.ops
+            success: true,
+            insertOkInt: a.result.n,
+            insertDatas: a.ops
         }
-    }else{
+    } else {
         sus.result = {
-            success:false
+            success: false
         }
     }
     res.send(sus);

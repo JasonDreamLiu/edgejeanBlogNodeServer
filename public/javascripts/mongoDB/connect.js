@@ -38,6 +38,9 @@ function mongoDB_Obj(url){
     this.aggregate = async (obj,collectionName) => {
         return await connect.connect(aggregate,{obj,collectionName});
     }
+    this.estimatedDocumentCount = async (obj,collectionName) => {
+        return await connect.connect(estimatedDocumentCount,{obj,collectionName});
+    }
 
     function connect_(user,pws,host,post,database){
         this.url = `mongodb://${user}:${pws}@${host}${post?":"+post:""}/${database}`;
@@ -50,14 +53,14 @@ function mongoDB_Obj(url){
                 console.log("数据库已连接！");
                 const dbase = conn.db(dbName);
                 a = await fc(obj, dbase, res);
+                return a;
             } catch (err){
                 console.error(`错误: ${err}`);
             } finally {
                 if (conn != null) {
                     conn.close()
                     console.log("数据库已断开！");
-                };
-                return a;
+                }
             }
         }
     }
@@ -155,6 +158,10 @@ async function aggregate(obj_,dbase){
         console.log(`查询失败！`);
         console.log(err);
     });
-};
+}
+async function estimatedDocumentCount(obj_,dbase){
+    const {obj={},collectionName} = obj_;
+    return dbase.collection(collectionName).estimatedDocumentCount(obj);
+}
 
 module.exports = mongoDB_Obj

@@ -41,6 +41,12 @@ function mongoDB_Obj(url){
     this.estimatedDocumentCount = async (obj,collectionName) => {
         return await connect.connect(estimatedDocumentCount,{obj,collectionName});
     }
+    this.updateOne = async (obj,collectionName,set,upsert,multi) => {
+        return await connect.connect(updateOne,{obj,collectionName,set,upsert,multi})
+    }
+    this.deleteOne = async (obj,collectionName) => {
+        return await connect.connect(deleteOne,{obj,collectionName});
+    }
 
     function connect_(user,pws,host,post,database){
         this.url = `mongodb://${user}:${pws}@${host}${post?":"+post:""}/${database}`;
@@ -162,6 +168,26 @@ async function aggregate(obj_,dbase){
 async function estimatedDocumentCount(obj_,dbase){
     const {obj={},collectionName} = obj_;
     return dbase.collection(collectionName).estimatedDocumentCount(obj);
+}
+async function updateOne(obj_,dbase){
+    const {obj={},collectionName,set,upsert=false,multi=false} = obj_;
+    if (!set){
+        console.log("修改参数set不能为空。");
+        return false;
+    }
+    return dbase.collection(collectionName).updateOne(obj,{$set:set},upsert,multi);
+}
+async function deleteOne(obj_,dbase){
+    const {obj={},collectionName} = obj_;
+    if ((!obj && typeof obj!=="object")){
+        console.log("删除参数不能为空并且必须是一个object对象，否则可能会删除集合中所有的数据！");
+        return false;
+    }
+    try{
+        return dbase.collection(collectionName).deleteOne(obj);
+    }catch (err){
+        return err;
+    }
 }
 
 module.exports = mongoDB_Obj

@@ -187,10 +187,10 @@ router.post('/connect/addBookmarks', async (req, res) => {
         if (a.length === 0) {
             a = await db.insertOne({title: key}, "tb_bookmarks");
         }
-        if (a[0]) {
-            a = a[0]._id;
+        if (a.result && a.result.ok>0) {
+            a = a.ops[0]._id;
         } else {
-            a = a._id
+            a = a[0]._id
         }
         for (let key1 in datas[key]) {
             await types.push(Object.assign(datas[key][key1], {bookmark_id: a}));
@@ -211,6 +211,42 @@ router.post('/connect/addBookmarks', async (req, res) => {
         }
     }
     res.send(sus);
+})
+router.post('/connect/updateBookmarkTypes', async (req, res) => {
+    const {data,id} = req.body;
+    const {title,url,name} = data;
+    let data_ = {};
+    if (title){
+        let a = await db.find({title: title}, "tb_bookmarks");
+        if (a.length === 0) {
+            a = await db.insertOne({title: title}, "tb_bookmarks");
+        }
+        if (a.result && a.result.ok>0) {
+            a = a.ops[0]._id;
+        } else {
+            a = a[0]._id
+        }
+        data_.bookmark_id = a;
+    }
+    if (url){
+        data_.url = url;
+    }
+    if (name){
+        data_.name = name;
+    }
+    let sus = await db.updateOne({_id:mongoose.Types.ObjectId(id)},"tb_bookmarks_types",data_);
+
+    res.send({result:sus.result,data:data_});
+})
+router.post('/connect/delBookmarksTypes', async (req, res) => {
+    const {id} = req.body;
+    if (!id){
+        res.send({result:{ok:0},success:"id不能为空!"});
+    }else {
+        let sus = await db.deleteOne({_id:mongoose.Types.ObjectId(id)},"tb_bookmarks_types");
+        console.log(sus);
+        res.send({result:sus.result});
+    }
 })
 
 module.exports = router;

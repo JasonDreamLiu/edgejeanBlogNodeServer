@@ -15,7 +15,8 @@
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.9",
     "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "axios": "^0.20.0",

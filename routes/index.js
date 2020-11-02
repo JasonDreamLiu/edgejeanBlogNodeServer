@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 // const {FetchData} = require('../public/javascripts/AxiosMannage/index');
 
 const db = new mongoDB({
-    user: "edgejeanblog",
-    pws: "sdd19961103",
-    host: "www.biogdream.com",
-    post: "52596",
-    database: "edgejeanblog"
+    user: "***",
+    pws: "***",
+    host: "***",
+    post: "***",
+    database: "***"
 })
 
 /* GET home page. */

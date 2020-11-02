@@ -47,6 +47,9 @@ function mongoDB_Obj(url){
     this.deleteOne = async (obj,collectionName) => {
         return await connect.connect(deleteOne,{obj,collectionName});
     }
+    this.deleteMany = async (obj,collectionName) => {
+        return await connect.connect(deleteMany,{obj,collectionName});
+    }
 
     function connect_(user,pws,host,post,database){
         this.url = `mongodb://${user}:${pws}@${host}${post?":"+post:""}/${database}`;
@@ -185,6 +188,18 @@ async function deleteOne(obj_,dbase){
     }
     try{
         return dbase.collection(collectionName).deleteOne(obj);
+    }catch (err){
+        return err;
+    }
+}
+async function deleteMany(obj_,dbase){
+    const {obj={},collectionName} = obj_;
+    if ((!obj && typeof obj!=="object")){
+        console.log("删除参数不能为空并且必须是一个object对象，否则可能会删除集合中所有的数据！");
+        return false;
+    }
+    try{
+        return dbase.collection(collectionName).deleteMany(obj);
     }catch (err){
         return err;
     }

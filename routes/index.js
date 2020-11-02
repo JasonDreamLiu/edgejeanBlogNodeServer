@@ -1,16 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const mongoDB = require('../public/javascripts/mongoDB/connect');
+const apijson = require('../apijson/api')
 const mongoose = require('mongoose');
 // const {FetchData} = require('../public/javascripts/AxiosMannage/index');
 
-const db = new mongoDB({
-    user: "edgejeanblog",
-    pws: "sdd19961103",
-    host: "www.biogdream.com",
-    post: "52596",
-    database: "edgejeanblog"
-})
+const db = new mongoDB(apijson.db);
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -37,7 +32,7 @@ router.get('/connect/selBookmarkTitles', async (req, res) => {
     let list = []
 
     a.forEach(item => {
-        list.push({value: item.title});
+        list.push({_id:item._id,value: item.title});
     })
     res.send(list);
 })
@@ -248,5 +243,27 @@ router.post('/connect/delBookmarksTypes', async (req, res) => {
         res.send({result:sus.result});
     }
 })
-
+router.post('/connect/delBookmarkTitle', async (req, res) => {
+    const titles = req.body;
+    let i = 0;
+    let yes_titles = []
+    if (!titles){
+        res.send({result:{ok:0},success:"参数不正确或者为空！"});
+    }else {
+        for (let index in titles){
+            const obj_Id = mongoose.Types.ObjectId(titles[index]);
+            console.log(titles[index]);
+            const sus = await db.deleteMany({bookmark_id:obj_Id},"tb_bookmarks_types");
+            i += sus.result.n;
+            yes_titles.push(obj_Id);
+        }
+        if (yes_titles.length>0){
+            let sus = await db.deleteMany({_id: {"$in":yes_titles}},"tb_bookmarks");
+            console.log(sus);
+            res.send({result:sus.result,typeInt:i});
+        }else {
+            res.send({result:{ok:false}});
+        }
+    }
+})
 module.exports = router;

@@ -23,10 +23,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa508fb8-31e1-4573-bfd4-811a0473e28d" name="默认的" comment="更新">
-      <change afterPath="$PROJECT_DIR$/bin/SSL/1_www.biogdream.com_bundle.crt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/SSL/2_www.biogdream.com.key" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apijson/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/blogNodeServer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/blogNodeServer.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/bin/www" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/mongoDB/connect.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/mongoDB/connect.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,20 +58,21 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.16.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.12.68" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/SSL" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/bin/SSL" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project\nodejs\edgejean\blogNodeServer\bin\SSL" />
+      <recent name="D:\Project\nodejs\edgejean\blogNodeServer\public\SSL" />
+      <recent name="E:\Project\NodeJS\edgejeanBlogNodeServer\public\SSL" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Project\nodejs\edgejean\blogNodeServer\bin" />
       <recent name="E:\Project\NodeJS\edgejeanBlogNodeServer\public\javascripts" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Project\nodejs\edgejean\blogNodeServer\public\SSL" />
-      <recent name="E:\Project\NodeJS\edgejeanBlogNodeServer\public\SSL" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -88,6 +91,16 @@
       <workItem from="1602954868375" duration="709000" />
       <workItem from="1603012285455" duration="1098000" />
       <workItem from="1603018405906" duration="9885000" />
+      <workItem from="1603184576254" duration="4397000" />
+      <workItem from="1603247254158" duration="10100000" />
+      <workItem from="1603331297597" duration="6542000" />
+      <workItem from="1603676346342" duration="16398000" />
+      <workItem from="1603764608278" duration="5097000" />
+      <workItem from="1603937870949" duration="12796000" />
+      <workItem from="1603966411410" duration="8000" />
+      <workItem from="1604041239142" duration="6516000" />
+      <workItem from="1604283646261" duration="8778000" />
+      <workItem from="1604311309837" duration="741000" />
     </task>
     <task id="LOCAL-00001" summary="更新">
       <created>1602607978955</created>
@@ -103,7 +116,56 @@
       <option name="project" value="LOCAL" />
       <updated>1602955818518</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="更新">
+      <created>1603101449051</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1603101449051</updated>
+    </task>
+    <task id="LOCAL-00004" summary="更新">
+      <created>1603188960964</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1603188960964</updated>
+    </task>
+    <task id="LOCAL-00005" summary="更新">
+      <created>1603275084414</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1603275084414</updated>
+    </task>
+    <task id="LOCAL-00006" summary="更新">
+      <created>1603361602788</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1603361602788</updated>
+    </task>
+    <task id="LOCAL-00007" summary="更新">
+      <created>1603707108687</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1603707108687</updated>
+    </task>
+    <task id="LOCAL-00008" summary="更新">
+      <created>1603966252286</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1603966252286</updated>
+    </task>
+    <task id="LOCAL-00009" summary="更新">
+      <created>1604054058952</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1604054058952</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,10 +188,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="更新" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="522" y="113" key="#Docker" timestamp="1603767483607">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="522" y="113" key="#Docker/0.0.1920.1040@0.0.1920.1040" timestamp="1603767483607" />
     <state x="1776" y="556" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603016012772">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1776" y="556" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1603016012772" />
+    <state x="596" y="51" width="836" height="989" key="CommitChangelistDialog2" timestamp="1604054055709">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="596" y="51" width="836" height="989" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1604054055709" />
     <state width="1063" height="466" key="DebuggerActiveHint" timestamp="1602949852532">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -146,25 +216,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="805" y="339" key="Github.UntrackedFilesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602584675803" />
-    <state width="1882" height="282" key="GridCell.Tab.0.bottom" timestamp="1603098606086">
+    <state width="1882" height="282" key="GridCell.Tab.0.bottom" timestamp="1603101551570">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1882" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1603098606086" />
+    <state width="1882" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1603101551570" />
     <state width="1379" height="488" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1602954122480" />
-    <state width="1882" height="282" key="GridCell.Tab.0.center" timestamp="1603098606085">
+    <state width="1882" height="282" key="GridCell.Tab.0.center" timestamp="1603101551570">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1882" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1603098606085" />
+    <state width="1882" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1603101551570" />
     <state width="1379" height="488" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1602954122480" />
-    <state width="1882" height="282" key="GridCell.Tab.0.left" timestamp="1603098606085">
+    <state width="1882" height="282" key="GridCell.Tab.0.left" timestamp="1603101551570">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1882" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1603098606085" />
+    <state width="1882" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1603101551570" />
     <state width="1379" height="488" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1602954122480" />
-    <state width="1882" height="282" key="GridCell.Tab.0.right" timestamp="1603098606085">
+    <state width="1882" height="282" key="GridCell.Tab.0.right" timestamp="1603101551570">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1882" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1603098606085" />
+    <state width="1882" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1603101551570" />
     <state width="1379" height="488" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1602954122480" />
     <state width="1379" height="488" key="GridCell.Tab.1.bottom" timestamp="1602954122481">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -214,31 +284,32 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1379" height="488" key="GridCell.Tab.3.right/0.0.2560.1400@0.0.2560.1400" timestamp="1602954122481" />
-    <state x="1060" y="419" key="RollbackChangesDialog" timestamp="1603034068172">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="795" y="311" key="RollbackChangesDialog" timestamp="1603678609080">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="795" y="311" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1603678609080" />
     <state x="1060" y="419" key="RollbackChangesDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1603034068172" />
     <state x="1364" y="372" key="SettingsEditor" timestamp="1603028687364">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1364" y="372" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1603028687364" />
-    <state x="744" y="377" key="Vcs.Push.Dialog.v2" timestamp="1602955828471">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="558" y="280" key="Vcs.Push.Dialog.v2" timestamp="1604054103628">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="558" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1602584700477" />
+    <state x="558" y="280" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604054103628" />
     <state x="744" y="377" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1602955828471" />
     <state width="708" height="700" key="XDebugger.FullValuePopup" timestamp="1602944249326">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="708" height="700" key="XDebugger.FullValuePopup/0.0.2560.1400@0.0.2560.1400" timestamp="1602944249326" />
-    <state x="773" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602811586421">
+    <state x="773" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603676374031">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="773" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1602811586421" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1602820822069">
+    <state x="773" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1603676374031" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1604303755949">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602820822069" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604303755949" />
     <state x="1585" y="357" width="672" height="678" key="search.everywhere.popup" timestamp="1603021119000">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

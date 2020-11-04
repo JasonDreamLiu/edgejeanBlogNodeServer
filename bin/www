@@ -3,24 +3,15 @@
 /**
  * Module dependencies.
  */
-var net = require('net');
 var app = require('../app');
 var debug = require('debug')('blognodeserver:server');
 var http = require('http');
-var https = require('https');
-var fs = require('fs');
-
-var options = {
-    key: fs.readFileSync('./bin/SSL/2_www.biogdream.com.key'),
-    cert: fs.readFileSync('./bin/SSL/1_www.biogdream.com_bundle.crt')
-}
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3001');
-var ports = normalizePort(process.env.PORT || '3002');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
@@ -28,14 +19,13 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-var servers = https.createServer(options, app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
 server.listen(port);
-var io = require('socket.io')(server);
+var io = require('socket.io')(server,{path:'/api/socket.io'});
 io.on('connection',socket=>{
     console.log('握手成功！');
     socket.on('Refresh',val=>{
@@ -45,31 +35,8 @@ io.on('connection',socket=>{
         }
     })
 })
-servers.listen(ports);
 server.on('error', onError);
 server.on('listening', onListening);
-net.createServer(function (socket) {
-    socket.once('data', function (buf) {
-        console.log(buf[0]);
-        // https数据流的第一位是十六进制“16”，转换成十进制就是22
-        var address = buf[0] === 22 ? ports : port;
-        //创建一个指向https或http服务器的链接
-        var proxy = net.createConnection(address, function () {
-            proxy.write(buf);
-            //反向代理的过程，tcp接受的数据交给代理链接，代理链接服务器端返回数据交由socket返回给客户端
-            socket.pipe(proxy).pipe(socket);
-        });
-
-
-        proxy.on('error', function (err) {
-            console.log(err);
-        });
-    });
-
-    socket.on('error', function (err) {
-        console.log(err);
-    });
-}).listen(3000);
 
 /**
  * Normalize a port into a number, string, or false.
